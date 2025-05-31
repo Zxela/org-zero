@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pydantic
+redis
+requests
+pyyaml
+sqlalchemy
+pydantic-settings

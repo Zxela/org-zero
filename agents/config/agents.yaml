@@ -1,0 +1,53 @@
+# agents/config/agents.yaml
+
+agents:
+  director:
+    model: gpt-4o
+    channel_out: pm_tasks
+    channel_in: updates
+    description: Entry point for all human input
+
+  pm:
+    model: mistral
+    channel_in: pm_tasks
+    channel_out:
+      - design_tasks
+      - dev_tasks
+      - ops_tasks
+      - sales_tasks
+    description: Breaks down project tasks and coordinates team
+
+  designer:
+    model: llava
+    channel_in: design_tasks
+    channel_out: updates
+    tools:
+      - figma
+    description: Produces wireframes and mockups
+
+  dev1:
+    model: deepseek-coder
+    channel_in: dev_tasks
+    channel_out: updates
+    description: Frontend and game UI tasks
+
+  dev2:
+    model: deepseek-coder
+    channel_in: dev_tasks
+    channel_out: updates
+    description: Backend logic and API tasks
+
+  devops:
+    model: mistral
+    channel_in: ops_tasks
+    channel_out: updates
+    tools:
+      - terraform
+      - github
+    description: Infra, CI/CD, deployment
+
+  sales:
+    model: openchat
+    channel_in: sales_tasks
+    channel_out: updates
+    description: Messaging, pricing, README
