@@ -32,6 +32,18 @@ Automate the full software delivery pipeline using AI agents:
 
 ---
 
+## 📈 Project Progress (as of May 31, 2025)
+
+- Core agent framework established: agents for Director, PM, Designer, Dev-Implementor, Dev-Reviewer, DevOps, and Sales are scaffolded and configured.
+- Redis Pub/Sub event-driven communication implemented for agent orchestration.
+- FastAPI input layer operational for text-based user prompts.
+- Initial Docker and infrastructure setup complete (Dockerfile, docker-compose, Terraform scaffolding).
+- Modular agent configuration and prompt templates in place for each role.
+- Early tests for Director and PM agents implemented.
+- Project structure and documentation improved for onboarding and contribution.
+
+---
+
 ## 🧠 Agent Roles
 
 | Agent             | Purpose                                      |
@@ -134,6 +146,22 @@ Automate the full software delivery pipeline using AI agents:
 2. Copy `.env.example` to `.env` and configure
 3. Run `docker-compose up`
 4. Access the API at `http://localhost:8000/chat`
+
+---
+
+## 🛠️ Development
+
+### Makefile Commands
+
+- `make setup` &mdash; Create a Python virtual environment
+- `make install` &mdash; Install dependencies into the venv
+- `make run-pm` &mdash; Start the Project Manager agent
+- `make run-api` &mdash; Start the FastAPI server
+- `make run-dev` &mdash; Start both PM agent and API server
+- `make start-redis` &mdash; Launch Redis in Docker
+- `make clean` &mdash; Remove venv and `__pycache__` folders
+- `make test` &mdash; Run all unit tests in the project (recursively from root)
+- `make test-file FILE=path/to/test_file.py` &mdash; Run a specific test file (e.g., `make test-file FILE=agents/pm/test_agent.py`)
 
 ---
 
