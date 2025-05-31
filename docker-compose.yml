@@ -16,11 +16,13 @@ services:
     volumes:
       - .:/app
     environment:
+      - PYTHONPATH=/app
       - MODEL_BACKEND=openrouter
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
       - DEFAULT_MODEL=gpt-4o
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - LOG_LEVEL=INFO
     depends_on:
       - redis
     ports:
@@ -35,7 +37,12 @@ services:
     volumes:
       - .:/app
     environment:
+      - PYTHONPATH=/app
+      - MODEL_BACKEND=openrouter
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - DEFAULT_MODEL=gpt-4o
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - LOG_LEVEL=INFO
     depends_on:
       - redis
