@@ -13,14 +13,16 @@ sequenceDiagram
 
   Human->>Director: "Build a game to teach AI agents to kids"
   Director->>PM: Delegate task
-  PM->>Designer: Request wireframes
+  PM->>DevImplementor: Collaborate on requirements
+  DevImplementor->>Designer: Provide implementation constraints
+  PM->>Designer: Request wireframes and UX plan
+  Designer-->>PM: Deliver wireframes and UX plan
   PM->>DevImplementor: Request implementation
-  PM->>DevOps: Provision infra + monitoring
   DevImplementor->>DevReviewer: Submit implementation
-  DevReviewer->>PM: Review feedback
-  Designer->>PM: Wireframes + UX plan
-  DevOps->>PM: Infra setup confirmation
+  DevReviewer-->>PM: Review feedback
+  PM->>DevOps: Provision infra + monitoring
+  DevOps-->>PM: Infra setup confirmation
+  DevImplementor->>GitHub: Push source code
   PM->>Director: Aggregated status and results
   Director->>Human: Project update + summary
-  DevImplementor->>GitHub: Push source code
 ```
