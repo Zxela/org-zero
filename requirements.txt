@@ -6,3 +6,4 @@ requests
 pyyaml
 sqlalchemy
 pydantic-settings
+psycopg2-binary
