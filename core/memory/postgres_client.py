@@ -2,6 +2,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from core.config import get_settings
+from core.models.job import Base as JobBase
 
 settings = get_settings()
 
@@ -14,3 +15,6 @@ DATABASE_URL = (
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Create tables if they do not exist
+JobBase.metadata.create_all(bind=engine)

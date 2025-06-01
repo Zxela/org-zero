@@ -6,8 +6,10 @@ PYTHON := python3
 PIP := $(VENV)/bin/pip
 REDIS_URL := localhost
 REDIS_PORT := 6379
+POSTGRES_URL := localhost
+POSTGRES_PORT := 5432
 
-.PHONY: all setup install check run-pm run-api run-dev start-redis clean test test-file run-designer run-reviewer run-sales run-devops
+.PHONY: all setup install check run-pm run-api run-dev start-redis start-postgres clean test test-file run-designer run-reviewer run-sales run-devops
 
 all: install
 
@@ -35,6 +37,9 @@ check:
 	@echo "🔎 Checking Redis availability..."
 	@timeout 1 bash -c "</dev/tcp/$(REDIS_URL)/$(REDIS_PORT)" || (echo "❌ Redis not reachable at $(REDIS_URL):$(REDIS_PORT). Run `make start-redis` or install Redis locally."; exit 1)
 	@echo "✅ Redis is online."
+	@echo "🔎 Checking PostgreSQL availability..."
+	@timeout 1 bash -c "</dev/tcp/$(POSTGRES_URL)/$(POSTGRES_PORT)" || (echo "❌ PostgreSQL not reachable at $(POSTGRES_URL):$(POSTGRES_PORT). Run `make start-postgres` or install PostgreSQL locally."; exit 1)
+	@echo "✅ PostgreSQL is online."
 
 # =====================
 # 🚀 Run Agents & API
@@ -87,26 +92,26 @@ run-dev: install check
 # =====================
 test: install
 	@echo "🧪 Running all unit tests..."
-	$(VENV)/bin/python -m unittest discover -s . -p 'test_*.py'
+	$(VENV)/bin/python -m unittest discover -s . -p '*_test.py'
 
 test-designer: install
 	@echo "🧪 Running DesignerAgent unit tests..."
-	$(VENV)/bin/python -m unittest agents/designer/test_agent.py
+	$(VENV)/bin/python -m unittest tests/agents/designer/designer_agent_test.py
 
 test-reviewer: install
 	@echo "🧪 Running ReviewerAgent unit tests..."
-	$(VENV)/bin/python -m unittest agents/reviewer/test_agent.py
+	$(VENV)/bin/python -m unittest tests/agents/reviewer/reviewer_agent_test.py
 
 test-devops: install
 	@echo "🧪 Running DevOpsAgent unit tests..."
-	$(VENV)/bin/python -m unittest agents/devops/test_agent.py
+	$(VENV)/bin/python -m unittest tests/agents/devops/devops_agent_test.py
 
 test-sales: install
 	@echo "🧪 Running SalesAgent unit tests..."
-	$(VENV)/bin/python -m unittest agents/sales/test_agent.py
+	$(VENV)/bin/python -m unittest tests/agents/sales/sales_agent_test.py
 
-# Usage: make test-file FILE=path/to/test_file.py
-# Example: make test-file FILE=agents/pm/test_agent.py
+# Usage: make test-file FILE=path/to/your_test_file.py
+# Example: make test-file FILE=tests/agents/pm/pm_agent_test.py
 test-file: install
 	@echo "🧪 Running unit test file: $(FILE) ..."
 	$(VENV)/bin/python -m unittest $(FILE)
@@ -123,6 +128,16 @@ start-redis:
 	@echo "🐳 Launching Redis container on port 6379..."
 	docker run --rm -d -p 6379:6379 --name redis-dev redis:7-alpine
 	@echo "✅ Redis is running in Docker (container: redis-dev)"
+
+start-postgres:
+	@echo "🐘 Launching PostgreSQL container on port 5432..."
+	docker run --rm -d -p 5432:5432 --name postgres-dev -e POSTGRES_USER=agent -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=agentnet postgres:15
+	@echo "✅ PostgreSQL is running in Docker (container: postgres-dev)"
+
+stop-postgres:
+	@echo "🛑 Stopping PostgreSQL container..."
+	docker stop postgres-dev || true
+	@echo "✅ PostgreSQL container stopped."
 
 clean:
 	@echo "🧹 Cleaning up..."

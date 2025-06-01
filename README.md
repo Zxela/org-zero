@@ -1,5 +1,17 @@
 # 🧠 Org-Zero: AI Agent Network
 
+---
+
+# 🚨 **ARCHITECTURE DIAGRAMS** 🚨
+
+👉 [Input Layer - Multimodal Interface](docs/input-layer-multimodal-interface.md)
+
+👉 [Agent Workflow Sequence (Build a Game to Teach AI Agents to Kids)](docs/agent-workflow-sequence.md)
+
+👉 [System Components Architecture](docs/system-components-architecture.md)
+
+---
+
 Org-Zero is an experimental framework that replaces a traditional software development organization with a coordinated network of AI agents. Each agent is specialized and collaborates asynchronously via Redis Pub/Sub to accomplish tasks end-to-end—from user prompt to GitHub artifact.
 
 ---
@@ -128,6 +140,14 @@ Automate the full software delivery pipeline using AI agents:
 
 ---
 
+## 🗃️ Persistent Job Tracking (PostgreSQL)
+
+- All jobs/tasks are tracked in the `jobs` table in PostgreSQL for durability and auditability.
+- Each job has a type, payload, status (pending, running, success, failed), result, and timestamps.
+- See `core/models/job.py` and `core/models/job_tracking.py` for schema and helper functions.
+
+---
+
 ## 🛣️ Roadmap / Work To Come
 
 - [ ] Add support for voice and image input (multimodal)
@@ -169,7 +189,7 @@ Automate the full software delivery pipeline using AI agents:
 - `make test-reviewer` — Run ReviewerAgent unit tests
 - `make test-devops` — Run DevOpsAgent unit tests
 - `make test-sales` — Run SalesAgent unit tests
-- `make test-file FILE=path/to/test_file.py` — Run a specific test file (e.g., `make test-file FILE=agents/pm/test_agent.py`)
+- `make test-file FILE=path/to/your_test_file.py` — Run a specific test file (e.g., `make test-file FILE=tests/agents/pm/pm_agent_test.py`)
 
 ### Running Individual Agents
 

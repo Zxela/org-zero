@@ -134,3 +134,13 @@ services:
     depends_on:
       - redis
 
+  postgres:
+    image: postgres:15
+    container_name: postgres-dev
+    environment:
+      POSTGRES_USER: agent
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: agentnet
+    ports:
+      - "5432:5432"
+

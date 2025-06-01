@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     # Model inference
     MODEL_BACKEND: str = "openrouter"
     OPENROUTER_API_KEY: str = ""
-    DEFAULT_MODEL: str = "gpt-4o"
+    DEFAULT_MODEL: str = "openai/gpt-4o"
 
     # Redis
     REDIS_HOST: str = "localhost"
@@ -24,6 +24,15 @@ class Settings(BaseSettings):
 
     # Logging
     LOG_LEVEL: str = "INFO"
+
+    # GitHub Integration
+    GITHUB_APP_ID: str = ""
+    GITHUB_APP_PRIVATE_KEY: str = ""
+    GITHUB_CLIENT_ID: str = ""
+    GITHUB_CLIENT_SECRET: str = ""
+    GITHUB_ACCESS_TOKEN: str = ""
+    GITHUB_REPO_OWNER: str = ""
+    GITHUB_REPO_NAME: str = ""
 
     class Config:
         env_file = ".env"
