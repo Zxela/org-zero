@@ -3,21 +3,21 @@
 ```mermaid
 flowchart TD
   subgraph Input
-    A1[Text Input (Web UI/API)]
-    A2[Voice Input (Whisper)]
-    A3[Image Input (CLIP)]
+    A1[Text Input - Web UI/API]
+    A2[Voice Input]
+    A3[Image Input]
+  end
+
+  subgraph Processing
+    P1[Whisper]
+    P2[CLIP]
   end
 
   subgraph DirectorAgent
     D1[Director Agent]
   end
 
-  subgraph Processing
-    W1((Whisper))
-    C1((CLIP))
-  end
-
   A1 --> D1
-  A2 --> W1 --> D1
-  A3 --> C1 --> D1
+  A2 --> P1 --> D1
+  A3 --> P2 --> D1
 ```
