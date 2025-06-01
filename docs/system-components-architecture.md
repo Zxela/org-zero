@@ -3,12 +3,12 @@
 ```mermaid
 flowchart TD
   subgraph External Inputs
-    Input1[Text (API, Web UI)]
-    Input2[Voice (Whisper)]
-    Input3[Image (CLIP)]
+    Input1[Text - API, Web UI]
+    Input2[Voice - Whisper]
+    Input3[Image - CLIP]
   end
 
-  subgraph App Core
+  subgraph AppCore
     DIR[Director Agent]
     PM[Project Manager Agent]
     DSG[Designer Agent]
@@ -18,10 +18,10 @@ flowchart TD
   end
 
   subgraph Infra
-    REDIS[(Redis - Pub/Sub)]
-    POSTGRES[(Postgres - State)]
-    GITHUB[(GitHub - Artifacts)]
-    LOG[(Log - TBD)]
+    REDIS[Redis - Pub/Sub]
+    POSTGRES[Postgres - State]
+    GITHUB[GitHub - Artifacts]
+    LOG[Log - TBD]
   end
 
   Input1 --> DIR
@@ -38,7 +38,7 @@ flowchart TD
   REV --> PM
   OPS --> PM
 
-  App Core --> REDIS
-  App Core --> POSTGRES
-  App Core --> LOG
+  AppCore --> REDIS
+  AppCore --> POSTGRES
+  AppCore --> LOG
 ```
