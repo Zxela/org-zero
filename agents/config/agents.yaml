@@ -2,13 +2,13 @@
 
 agents:
   director:
-    model: gpt-4o
+    model: openai/gpt-4o
     channel_out: pm_tasks
     channel_in: updates
     description: Entry point for all human input
 
   pm:
-    model: mistral
+    model: anthropic/claude-3-haiku
     channel_in: pm_tasks
     channel_out:
       - design_tasks
@@ -25,20 +25,20 @@ agents:
       - figma
     description: Produces wireframes and mockups
 
-  dev1:
+  implementor:
     model: deepseek-coder
     channel_in: dev_tasks
     channel_out: updates
-    description: Frontend and game UI tasks
+    description: Implementation engineer
 
-  dev2:
+  reviewer:
     model: deepseek-coder
     channel_in: dev_tasks
     channel_out: updates
-    description: Backend logic and API tasks
+    description: Review work by implementor
 
   devops:
-    model: mistral
+    model: anthropic/claude-3-haiku
     channel_in: ops_tasks
     channel_out: updates
     tools:

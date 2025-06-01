@@ -21,9 +21,9 @@ Automate the full software delivery pipeline using AI agents:
 - **Orchestration Layer:**  
   Agents communicate via Redis Pub/Sub:
   - `director` publishes to `pm:task`
-  - `pm` delegates to `dev-implementor`, `designer`, `devops`, etc.
-  - `dev-implementor` pushes code
-  - `dev-reviewer` reviews
+  - `pm` delegates to `implementor`, `designer`, `devops`, etc.
+  - `implementor` pushes code
+  - `reviewer` reviews
   - `pm` aggregates results and reports back to `director`
   - `director` responds to the user
 
@@ -34,7 +34,7 @@ Automate the full software delivery pipeline using AI agents:
 
 ## 📈 Project Progress (as of May 31, 2025)
 
-- Core agent framework established: agents for Director, PM, Designer, Dev-Implementor, Dev-Reviewer, DevOps, and Sales are scaffolded and configured.
+- Core agent framework established: agents for Director, PM, Designer, Implementor, Reviewer, DevOps, and Sales are scaffolded and configured.
 - Redis Pub/Sub event-driven communication implemented for agent orchestration.
 - FastAPI input layer operational for text-based user prompts.
 - Initial Docker and infrastructure setup complete (Dockerfile, docker-compose, Terraform scaffolding).
@@ -51,8 +51,8 @@ Automate the full software delivery pipeline using AI agents:
 | `director`        | Entry point, user-facing orchestrator        |
 | `pm`              | Delegates tasks, tracks progress             |
 | `designer`        | Creates wireframes and UX flows              |
-| `dev-implementor` | Writes and commits application code          |
-| `dev-reviewer`    | Reviews code from implementor                |
+| `implementor`     | Writes and commits application code          |
+| `reviewer`        | Reviews code from implementor                |
 | `devops`          | Manages infra code (Terraform, CI/CD, etc.)  |
 | `sales`           | Handles pricing strategy, positioning, growth|
 
@@ -77,8 +77,8 @@ Automate the full software delivery pipeline using AI agents:
 ├── agents/
 │   ├── director/
 │   ├── pm/
-│   ├── dev-implementor/
-│   ├── dev-reviewer/
+│   ├── implementor/
+│   ├── reviewer/
 │   ├── designer/
 │   ├── devops/
 │   └── sales/
@@ -106,7 +106,7 @@ Automate the full software delivery pipeline using AI agents:
 - FastAPI endpoint (`/chat`) to send prompts
 - Director agent creates task description
 - ProjectManager agent subscribes to `pm:task`
-- Dev agent subscribes to `dev-implementor:task`
+- Dev agent subscribes to `implementor:task`
 - Tasks passed downstream and simulated "commits" printed
 - Redis Pub/Sub wiring complete
 - Configurable model backend via `.env`
@@ -153,15 +153,56 @@ Automate the full software delivery pipeline using AI agents:
 
 ### Makefile Commands
 
-- `make setup` &mdash; Create a Python virtual environment
-- `make install` &mdash; Install dependencies into the venv
-- `make run-pm` &mdash; Start the Project Manager agent
-- `make run-api` &mdash; Start the FastAPI server
-- `make run-dev` &mdash; Start both PM agent and API server
-- `make start-redis` &mdash; Launch Redis in Docker
-- `make clean` &mdash; Remove venv and `__pycache__` folders
-- `make test` &mdash; Run all unit tests in the project (recursively from root)
-- `make test-file FILE=path/to/test_file.py` &mdash; Run a specific test file (e.g., `make test-file FILE=agents/pm/test_agent.py`)
+- `make setup` — Create a Python virtual environment
+- `make install` — Install dependencies into the venv
+- `make run-pm` — Start the Project Manager agent
+- `make run-api` — Start the FastAPI server
+- `make run-dev` — Start both PM agent and API server
+- `make run-designer` — Start the Designer agent
+- `make run-reviewer` — Start the Reviewer agent
+- `make run-devops` — Start the DevOps agent
+- `make run-sales` — Start the Sales agent
+- `make start-redis` — Launch Redis in Docker
+- `make clean` — Remove venv and `__pycache__` folders
+- `make test` — Run all unit tests in the project (recursively from root)
+- `make test-designer` — Run DesignerAgent unit tests
+- `make test-reviewer` — Run ReviewerAgent unit tests
+- `make test-devops` — Run DevOpsAgent unit tests
+- `make test-sales` — Run SalesAgent unit tests
+- `make test-file FILE=path/to/test_file.py` — Run a specific test file (e.g., `make test-file FILE=agents/pm/test_agent.py`)
+
+### Running Individual Agents
+
+To run a specific agent (e.g., DevOps or Sales):
+
+```powershell
+# Start DevOps agent
+make run-devops
+
+# Start Sales agent
+make run-sales
+```
+
+### Running Agent Unit Tests
+
+```powershell
+# Test DevOps agent
+make test-devops
+
+# Test Sales agent
+make test-sales
+```
+
+---
+
+## 🐳 Docker Compose Services
+
+- `api` — FastAPI server
+- `pm` — Project Manager agent
+- `implementor` — Implementation agent
+- `designer` — Designer agent
+- `reviewer` — Reviewer agent
+- `redis` — Redis server
 
 ---
 

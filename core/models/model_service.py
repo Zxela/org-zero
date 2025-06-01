@@ -29,6 +29,11 @@ class ModelService:
         print(json.dumps(payload, indent=2))
 
         try:
+            print("🚀 Requesting OpenRouter with:")
+            print("Model:", model)
+            print("Messages:", json.dumps(messages, indent=2))
+            print("API Key Present:", bool(self.api_key))
+
             response = requests.post(url, headers=self.default_headers, json=payload)
             response.raise_for_status()
             return response.json()["choices"][0]["message"]["content"]

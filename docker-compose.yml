@@ -46,3 +46,91 @@ services:
       - LOG_LEVEL=INFO
     depends_on:
       - redis
+
+  implementor:
+    build:
+      context: .
+    command: python scripts/run_implementor.py
+    environment:
+      - PYTHONPATH=/app
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+
+  designer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agent-designer
+    command: python agents/designer/agent.py
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+      - MODEL_BACKEND=openrouter
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - DEFAULT_MODEL=gpt-4o
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - LOG_LEVEL=INFO
+    depends_on:
+      - redis
+
+  reviewer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agent-reviewer
+    command: python agents/reviewer/agent.py
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+      - MODEL_BACKEND=openrouter
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - DEFAULT_MODEL=gpt-4o
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - LOG_LEVEL=INFO
+    depends_on:
+      - redis
+
+  devops:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agent-devops
+    command: python agents/devops/agent.py
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+      - MODEL_BACKEND=openrouter
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - DEFAULT_MODEL=gpt-4o
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - LOG_LEVEL=INFO
+    depends_on:
+      - redis
+
+  sales:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agent-sales
+    command: python agents/sales/agent.py
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+      - MODEL_BACKEND=openrouter
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - DEFAULT_MODEL=gpt-4o
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - LOG_LEVEL=INFO
+    depends_on:
+      - redis
+

@@ -19,9 +19,9 @@ Automate the full software delivery pipeline using AI agents:
 ### Orchestration Layer
 Agents communicate via Redis Pub/Sub:
 - `director` publishes to `pm:task`
-- `pm` delegates to `dev-implementor`, `designer`, `devops`, etc.
-- `dev-implementor` pushes code
-- `dev-reviewer` reviews
+- `pm` delegates to `implementor`, `designer`, `devops`, etc.
+- `implementor` pushes code
+- `reviewer` reviews
 - `pm` aggregates results and reports back to `director`
 - `director` responds to the user
 
@@ -35,8 +35,8 @@ Agents communicate via Redis Pub/Sub:
 | `director`        | Entry point, user-facing orchestrator        |
 | `pm`              | Delegates tasks, tracks progress             |
 | `designer`        | Creates wireframes and UX flows              |
-| `dev-implementor` | Writes and commits application code          |
-| `dev-reviewer`    | Reviews code from implementor                |
+| `implementor`     | Writes and commits application code          |
+| `reviewer`        | Reviews code from implementor                |
 | `devops`          | Manages infra code (Terraform, CI/CD, etc.)  |
 | `sales`           | Handles pricing strategy, positioning, growth|
 
@@ -57,8 +57,8 @@ Agents communicate via Redis Pub/Sub:
 ├── agents/
 │   ├── director/
 │   ├── pm/
-│   ├── dev-implementor/
-│   ├── dev-reviewer/
+│   ├── implementor/
+│   ├── reviewer/
 │   ├── designer/
 │   ├── devops/
 │   └── sales/
@@ -83,7 +83,7 @@ Agents communicate via Redis Pub/Sub:
 - FastAPI endpoint (/chat) to send prompts
 - Director agent creates task description
 - ProjectManager agent subscribes to pm:task
-- Dev agent subscribes to dev-implementor:task
+- Dev agent subscribes to implementor:task
 - Tasks passed downstream and simulated "commits" printed
 - Redis Pub/Sub wiring complete
 - Configurable model backend via .env
