@@ -9,10 +9,15 @@ flowchart TD
   end
 
   subgraph DirectorAgent
-    D1["Director Agent"]
+    D1[Director Agent]
+  end
+
+  subgraph Processing
+    W1((Whisper))
+    C1((CLIP))
   end
 
   A1 --> D1
-  A2 --> Whisper((Whisper)) --> D1
-  A3 --> CLIP((CLIP)) --> D1
+  A2 --> W1 --> D1
+  A3 --> C1 --> D1
 ```
